@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="row">
+    <h4>Game ID: {{game.id}}</h4>
+    <div class="col-12">
+        <p>Total Rounds: {{game.current_round}}</p>
+    </div>
+    
+    <div class="col-6 br-1">
+        <h3>{{game.players[0].name | title }}</h3> 
+        <p>Total Points: {{game.players[0].get_score(game.id)}}</p>
+
+        
+    </div>
+
+    <div class="col-6">
+
+        <h3>{{game.players[1].name | title }}</h3> 
+        <p>Total Points: {{game.players[1].get_score(game.id)}}</p>
+
+    </div>
+
+    <div class="col-12">
+        <table class="table table-dark table-hover">
+            <thead>
+              <tr>
+                <th>Round</th>
+                <th>{{game.players[0].name | title }}</th>
+                <th>{{game.players[1].name | title }}</th>
+                <th>Winner</th>
+              </tr>
+            </thead>
+            <tbody>
+                {% for item in data %}
+                    <tr>
+                        <td>{{item[0]}}</td>
+                        <td>{{item[1]}}</td>
+                        <td>{{item[2]}}</td>
+                        <td>{{item[3]}}</td>
+                    </tr>
+                {% endfor %}
+             
+            </tbody>
+        </table>
+    </div>
+</div>
+    
+
+{% endblock %}

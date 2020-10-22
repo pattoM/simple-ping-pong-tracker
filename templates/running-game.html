@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="row">
+    <h4>Game ID: {{game.id}}</h4>
+    <div class="col-12">
+        <p>Now serving: 
+            {% if game.current_serving == game.players[0].id %}
+            {{game.players[0].name}}
+            {% else %}
+            {{game.players[1].name}} 
+            {% endif %}
+        </p>
+        <p>Current round: {{game.current_round}}</p>
+    </div>
+    
+    <div class="col-6 br-1">
+
+
+        <form action="{{url_for('running_game', id=id)}}" method="POST">
+            <h3>{{game.players[0].name}}</h3> 
+            <p>Round Score: {{game.players[0].get_score_in_round(game.id, game.current_round)}}</p>
+            <p>Add score</p>
+            {{form1.hidden_tag()}} 
+            {{form1.user_id(type="hidden", value=game.players[0].id)}}
+            <div class="form-group">
+                {{form1.label}} 
+                {{form1.score(class="form-control")}}
+            </div>
+            <div class="form-group">
+                <button class="btn btn-sm btn-info">
+                    Add
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <div class="col-6">
+
+        <form action="{{url_for('running_game', id=id)}}" method="POST">
+            <h3>{{game.players[1].name}}</h3> 
+            <p>Round Score: {{game.players[1].get_score_in_round(game.id, game.current_round)}}</p>
+            <p>Add score</p>
+            {{form2.hidden_tag()}} 
+            {{form2.user_id2(type="hidden", value=game.players[1].id)}}
+            <div class="form-group">
+                {{form2.label}} 
+                {{form2.score2(class="form-control")}}
+            </div>
+            <div class="form-group">
+                <button class="btn btn-sm btn-info">
+                    Add
+                </button>
+            </div>
+        </form>
+
+    </div>
+</div>
+    
+
+{% endblock %}
