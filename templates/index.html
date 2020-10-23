@@ -20,7 +20,7 @@
                     <tr>
                         <td>{{loop.index}}</td>
                         <td>{{item.name}}</td>
-                        <td>0</td>
+                        <td>{% if item.score_sum == None %} 0 {%else%}{{item.score_sum}}{% endif %}</td>
                     </tr>
                 {% endfor %}
              

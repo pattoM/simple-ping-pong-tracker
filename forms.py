@@ -12,8 +12,8 @@ class NewGameForm(FlaskForm):
 
 class ScoreForm(FlaskForm):
     user_id  = StringField("user_id")
-    score  = IntegerField("Score", validators=[DataRequired(),])
+    score  = IntegerField("Score", default=1, validators=[DataRequired(),])
 
 class ScoreForm2(FlaskForm):
     user_id2  = StringField("user_id")
-    score2  = IntegerField("Score", validators=[DataRequired(),])
+    score2  = IntegerField("Score", default=1, validators=[DataRequired(),])

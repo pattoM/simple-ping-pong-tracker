@@ -3,57 +3,66 @@
 {% block content %}
 
 <div class="row">
-    <h4>Game ID: {{game.id}}</h4>
     <div class="col-12">
-        <p>Now serving: 
+        <h4>Running Game</h4>
+    </div>
+    <div class="col-12">
+        <p><strong>Serving:</strong>  
             {% if game.current_serving == game.players[0].id %}
-            {{game.players[0].name}}
+            {{game.players[0].name | title }}
             {% else %}
-            {{game.players[1].name}} 
+            {{game.players[1].name | title }} 
             {% endif %}
         </p>
-        <p>Current round: {{game.current_round}}</p>
+        <p><strong>Current Round</strong> {{game.current_round}}</p>
+        <p><strong>Game ID:</strong> {{game.id}}</p>
     </div>
     
-    <div class="col-6 br-1">
+    <div class="col-6 border p-4">
 
 
-        <form action="{{url_for('running_game', id=id)}}" method="POST">
+        <form action="{{url_for('running_game', id=id)}}?form_tagger=f1" method="POST">
             <h3>{{game.players[0].name}}</h3> 
             <p>Round Score: {{game.players[0].get_score_in_round(game.id, game.current_round)}}</p>
-            <p>Add score</p>
+            <p class="font-weight-bold">Add point</p>
             {{form1.hidden_tag()}} 
             {{form1.user_id(type="hidden", value=game.players[0].id)}}
             <div class="form-group">
                 {{form1.label}} 
-                {{form1.score(class="form-control")}}
+                {{form1.score(class="form-control", readonly="true")}}
             </div>
             <div class="form-group">
-                <button class="btn btn-sm btn-info">
+                <button {% if game.current_serving != game.players[0].id %}type="button" disabled{% endif %} class="btn btn-sm btn-info">
                     Add
                 </button>
             </div>
         </form>
+            <p class="font-weight-bold">Record Serve</p>
+            <a href="{% if game.current_serving == game.players[0].id %}{{url_for('running_game', id=id)}}?serving_id={{game.players[0].id}}{% else %}#{% endif %}"><input type="button" class="btn btn-sm btn-info" value="Log Serve"></a>
+        </form>
     </div>
 
-    <div class="col-6">
+    <div class="col-6 border p-4">
 
-        <form action="{{url_for('running_game', id=id)}}" method="POST">
+        <form action="{{url_for('running_game', id=id)}}?form_tagger=f2" method="POST">
             <h3>{{game.players[1].name}}</h3> 
             <p>Round Score: {{game.players[1].get_score_in_round(game.id, game.current_round)}}</p>
-            <p>Add score</p>
+            <p class="font-weight-bold">Add point</p>
             {{form2.hidden_tag()}} 
             {{form2.user_id2(type="hidden", value=game.players[1].id)}}
             <div class="form-group">
                 {{form2.label}} 
-                {{form2.score2(class="form-control")}}
+                {{form2.score2(class="form-control", readonly="true")}}
             </div>
             <div class="form-group">
-                <button class="btn btn-sm btn-info">
+                <button {% if game.current_serving != game.players[1].id %}type="button" disabled{% endif %} class="btn btn-sm btn-info">
                     Add
                 </button>
             </div>
         </form>
+
+            <p class="font-weight-bold">Record Serve</p>
+            <a href="{% if game.current_serving == game.players[1].id %}{{url_for('running_game', id=id)}}?serving_id={{game.players[1].id}}{% else %}#{% endif %}"><input type="button" class="btn btn-sm btn-info" value="Log Serve"></a>
 
     </div>
 </div>
